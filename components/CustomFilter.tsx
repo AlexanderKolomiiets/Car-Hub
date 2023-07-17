@@ -1,41 +1,32 @@
 "use client";
 
-import { FC, Fragment, useState } from "react";
+import { Dispatch, FC, Fragment, SetStateAction, useState } from "react";
 import Image from "next/image";
-import { useRouter } from "next/navigation";
 import { Listbox, Transition } from "@headlessui/react";
-import { updateSearchParams } from "@/utils";
 
 type Props = {
-  title: string;
   options: {
     title: string;
     value: string
-  }[]
+  }[],
+  setFilter: Dispatch<SetStateAction<any>>;
 }
 
-const CustomFilter: FC<Props> = ({ title, options }) => {
-  const router = useRouter();
-  const [selected, setSelected] = useState(options[0]);
-
-  const handleUpdateParams = (event: { title: string; value: string }) => {
-    const newPathName = updateSearchParams(title, event.value.toLowerCase());
-
-    router.push(newPathName);
-  };
+const CustomFilter: FC<Props> = ({ options, setFilter }) => {
+  const [menu, setMenu] = useState(options[0]);
 
   return (
     <div className='w-fit'>
       <Listbox
-        value={selected}
+        value={menu}
         onChange={(event) => {
-          setSelected(event);
-          handleUpdateParams(event);
+          setMenu(event);
+          setFilter(event.value);
         }}
       >
         <div className='relative w-fit'>
           <Listbox.Button className='custom-filter__btn'>
-            <span className='block truncate'>{selected.title}</span>
+            <span className='block truncate'>{menu.title}</span>
             <Image src='/chevron-up-down.svg' width={20} height={20} className='ml-4 object-contain' alt='chevron_up-down' />
           </Listbox.Button>
           <Transition

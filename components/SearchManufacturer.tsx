@@ -6,11 +6,11 @@ import Image from "next/image";
 import { manufacturers } from "@/constants";
 
 type Props = {
-	manufacturer: string;
-	setManufacturer: (manufacturer: string) => void;
+	selected: string;
+	setSelected: (selected: string) => void;
 };
 
-const SearchManufacturer: FC<Props> = ({ manufacturer, setManufacturer }) => {
+const SearchManufacturer: FC<Props> = ({ selected, setSelected }) => {
 	const [query, setQuery] = useState("");
 
 	const filteredManufacturers =
@@ -25,7 +25,7 @@ const SearchManufacturer: FC<Props> = ({ manufacturer, setManufacturer }) => {
 
 	return (
 		<div className="search-manufacturer">
-			<Combobox value={manufacturer} onChange={setManufacturer}>
+			<Combobox value={selected} onChange={setSelected}>
 				<div className="relative w-full">
 					<Combobox.Button className="absolute top-[14px]">
 						<Image

@@ -12,3 +12,5 @@ export interface CarProps {
     transmission: string;
     year: number;
 }
+
+export type CarState = CarProps[] & { message?: string };
